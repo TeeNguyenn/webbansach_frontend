@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Navbar from './layouts/header-footer/Navbar';
+import Footer from './layouts/header-footer/Footer';
+import HomePage from './layouts/homepage/components/HomePage';
+import { layToanBoSach } from './api/SachAPI';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import About from './layouts/about/About';
+import ChiTietSanPham from './layouts/product/ChiTietSanPham';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [tuKhoaTimKiem, setTuKhoaTimKiem] = useState('');
+
+    return (
+        <div className="">
+            <BrowserRouter>
+                <Navbar
+                    tuKhoaTimKiem={tuKhoaTimKiem}
+                    setTuKhoaTimKiem={setTuKhoaTimKiem}
+                ></Navbar>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <HomePage tuKhoaTimKiem={tuKhoaTimKiem}></HomePage>
+                        }
+                    ></Route>
+                    <Route
+                        path="/:maTheLoai"
+                        element={
+                            <HomePage tuKhoaTimKiem={tuKhoaTimKiem}></HomePage>
+                        }
+                    ></Route>
+                    <Route path="/about" element={<About></About>}></Route>
+                    <Route
+                        path="/sach/:maSach"
+                        element={<ChiTietSanPham></ChiTietSanPham>}
+                    ></Route>
+                </Routes>
+                <Footer></Footer>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
